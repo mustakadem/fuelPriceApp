@@ -59,12 +59,6 @@ $ yarn gql:typings --watch
 $ yarn cli
 ```
 
-5. If you're going to edit the GraphQL schema, run the following command to regenerate the TypeScript types.
-
-```bash
-$ docker-compose exec app yarn gql:typings --watch
-```
-
 6. Install git hooks locally
 
 ```bash
