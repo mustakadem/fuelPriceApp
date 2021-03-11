@@ -3,28 +3,22 @@ services:
   db:
     image: postgres:13-alpine
     ports:
-      - 5432:5432
+      - ${DB_PORT}:5432
     environment:
-      POSTGRES_USER: backend
-      POSTGRES_DB: backend
-      POSTGRES_PASSWORD: backend
+      POSTGRES_USER: fuelPriceApp
+      POSTGRES_DB: fuelPriceApp
+      POSTGRES_PASSWORD: fuelPriceApp
+      PG_SYSTEM_MAX_CONNECTIONS: 200
+    command: ['-c', 'max_connections=200']
     volumes:
       - db-data:/var/lib/postgresql/data
-
-  app:
-    build:
-      context: .
-    command: wait-for-it -s db:5432 -- yarn dev
-    environment:
-      DATABASE_URL: postgresql://backend:backend@db:5432/backend?schema=public
-      PORT: 3000
-      SERVER_URL: http://localhost:3000
-    links:
-      - db
-    ports:
-      - 3000:3000
-    volumes:
-      - .:/app
+    networks:
+      - common-network
 
 volumes:
   db-data:
+  minio-data:
+
+networks:
+  common-network:
+    driver: bridge

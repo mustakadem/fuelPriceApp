@@ -48,12 +48,12 @@ export class AuthResolver {
     const payload = jwt.decode(token) as { [key: string]: any };
 
     const id = payload.id;
-
-    const user = await this.prisma.user.findOne({
+    const user: Record<string, string> = {};
+    /*const user = await this.prisma.user.findOne({
       where: {
         id,
       },
-    });
+    });*/
 
     if (!user) {
       throw new UnauthorizedError(`Token expire or user not exist`);

@@ -16,8 +16,8 @@
     "test": "jest",
     "test:debug": "node --inspect ./node_modules/.bin/jest --watch --runInBand --testTimeout 999999",
     "heroku-postbuild": "yarn prisma migrate up --experimental && yarn prisma generate && yarn build",
-    "migrate": "yarn prisma migrate up --experimental",
-    "makemigrations": "yarn prisma migrate save --experimental"
+    "makemigrations": "yarn prisma migrate dev --preview-feature",
+    "migrate": "yarn prisma migrate deploy --preview-feature"
   },
   "lint-staged": {
     "src/**/*.{js,json,ts,graphql}": [

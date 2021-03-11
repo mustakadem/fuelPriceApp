@@ -90,7 +90,7 @@ export class AuthService {
 
     switch (payload.type) {
       case 'user':
-        findEntityPromise = this.prisma.user.findOne(entitySelect);
+        findEntityPromise = Promise.resolve(null); // this.prisma.user.findOne(entitySelect);
         break;
       default:
         findEntityPromise = Promise.resolve(null);
