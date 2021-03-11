@@ -59,7 +59,7 @@ $ yarn gql:typings --watch
 $ yarn cli
 ```
 
-6. Install git hooks locally
+11. Install git hooks locally
 
 ```bash
 $ yarn husky install
