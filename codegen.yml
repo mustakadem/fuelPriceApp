@@ -1,0 +1,15 @@
+overwrite: true
+schema: './src/**/*.graphql'
+documents: null
+generates:
+  src/graphql.types.ts:
+    plugins:
+      - add: '/* eslint-disable */'
+      - 'typescript'
+      - 'typescript-resolvers'
+    config:
+      enumsAsTypes: true
+      maybeValue: 'T extends PromiseLike<infer U> ? Promise<U> : T'
+      scalars:
+        Date: Date
+        PaginationAmount: number

@@ -1,0 +1,36 @@
+input AuthLoginDto {
+  token: String!
+}
+
+"""
+`login` mutation response
+"""
+type AuthLoginResponseDto {
+  accessToken: String!
+  id: String!
+  type: String!
+}
+
+type Query {
+  """
+  Allows to check if the user is authenticated
+  **Roles**: `unauthenticated`, `user`
+  """
+  loggedIn: Boolean!
+}
+
+type Mutation {
+  """
+  Disables the access token in use
+
+  **Roles**: `user`
+  """
+  logout: Boolean
+
+  """
+  Logins to the app using auth token
+
+  **Roles**: `user`
+  """
+  login(dto: AuthLoginDto!): AuthLoginResponseDto!
+}

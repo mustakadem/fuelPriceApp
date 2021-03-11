@@ -1,0 +1,7 @@
+enum Errors {
+  NotFound
+  Validation
+  Internal
+  Unauthorized
+  Forbidden
+}
