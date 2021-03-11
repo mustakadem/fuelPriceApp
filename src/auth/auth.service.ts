@@ -90,14 +90,14 @@ export class AuthService {
 
     switch (payload.type) {
       case 'user':
-        findEntityPromise = Promise.resolve(null); // this.prisma.user.findOne(entitySelect);
+        findEntityPromise = Promise.resolve(null); // this.prisma.user.findUnique(entitySelect);
         break;
       default:
         findEntityPromise = Promise.resolve(null);
     }
 
     const [disabledToken, entity] = await Promise.all([
-      this.prisma.disabledToken.findOne({
+      this.prisma.disabledToken.findUnique({
         where: { token },
       }),
       findEntityPromise,
