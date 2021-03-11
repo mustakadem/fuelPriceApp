@@ -5,7 +5,7 @@
 1. Clone this repository and open it
 
 ```bash
-$ git clone 
+$ git clone https://github.com/mustakadem/fuelPriceApp.git
 $ cd fuelPriceApp
 ```
 
