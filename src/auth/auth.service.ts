@@ -97,7 +97,7 @@ export class AuthService {
     }
 
     const [disabledToken, entity] = await Promise.all([
-      this.prisma.disabledToken.findOne({
+      this.prisma.disabledToken.findUnique({
         where: { token },
       }),
       findEntityPromise,
