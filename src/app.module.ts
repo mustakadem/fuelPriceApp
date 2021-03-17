@@ -7,6 +7,7 @@ import { ScalarsModule } from './scalars/scalars.module';
 import GraphQLJSON from 'graphql-type-json';
 import { ScheduleModule } from '@nestjs/schedule';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from '@/user/user.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { AuthModule } from './auth/auth.module';
     ScalarsModule,
     ScheduleModule.forRoot(),
     AuthModule,
+    UserModule,
   ],
 })
 export class AppModule {}

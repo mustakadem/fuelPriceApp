@@ -35,10 +35,39 @@ export type Query = {
    * **Roles**: `unauthenticated`, `user`
    */
   loggedIn: Scalars['Boolean'];
+  /**
+   * Get user by id
+   * 
+   * Roles: `admin`
+   */
+  user: User;
+  /**
+   * Get all users
+   * 
+   * Roles: `admin`
+   */
+  users: Array<User>;
+};
+
+
+export type QueryUserArgs = {
+  id: Scalars['String'];
 };
 
 export type Mutation = {
   __typename?: 'Mutation';
+  /**
+   * Create user
+   * 
+   * Roles: `admin`
+   */
+  createUser: User;
+  /**
+   * Logins to the app using auth token
+   * 
+   * **Roles**: `user`
+   */
+  login: AuthLoginResponseDto;
   /**
    * Disables the access token in use
    * 
@@ -46,16 +75,27 @@ export type Mutation = {
    */
   logout?: Maybe<Scalars['Boolean']>;
   /**
-   * Logins to the app using auth token
+   * Update user
    * 
-   * **Roles**: `user`
+   * Roles: `admin`
    */
-  login: AuthLoginResponseDto;
+  updateUser: User;
+};
+
+
+export type MutationCreateUserArgs = {
+  dto?: Maybe<CreateUserDto>;
 };
 
 
 export type MutationLoginArgs = {
   dto: AuthLoginDto;
+};
+
+
+export type MutationUpdateUserArgs = {
+  id: Scalars['String'];
+  dto?: Maybe<UpdateUserDto>;
 };
 
 export type Errors = 
@@ -67,6 +107,26 @@ export type Errors =
 
 
 
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['String'];
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+  isActive: Scalars['Boolean'];
+  createdAt: Scalars['Date'];
+  updatedAt: Scalars['Date'];
+};
+
+export type CreateUserDto = {
+  firstName: Scalars['String'];
+  lastName: Scalars['String'];
+};
+
+export type UpdateUserDto = {
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+};
 
 
 
@@ -156,6 +216,9 @@ export type ResolversTypes = {
   Date: ResolverTypeWrapper<Scalars['Date']>;
   PaginationAmount: ResolverTypeWrapper<Scalars['PaginationAmount']>;
   JSON: ResolverTypeWrapper<Scalars['JSON']>;
+  User: ResolverTypeWrapper<User>;
+  CreateUserDto: CreateUserDto;
+  UpdateUserDto: UpdateUserDto;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -169,6 +232,9 @@ export type ResolversParentTypes = {
   Date: Scalars['Date'];
   PaginationAmount: Scalars['PaginationAmount'];
   JSON: Scalars['JSON'];
+  User: User;
+  CreateUserDto: CreateUserDto;
+  UpdateUserDto: UpdateUserDto;
 };
 
 export type AuthLoginResponseDtoResolvers<ContextType = any, ParentType extends ResolversParentTypes['AuthLoginResponseDto'] = ResolversParentTypes['AuthLoginResponseDto']> = {
@@ -180,11 +246,15 @@ export type AuthLoginResponseDtoResolvers<ContextType = any, ParentType extends 
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
   loggedIn?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<QueryUserArgs, 'id'>>;
+  users?: Resolver<Array<ResolversTypes['User']>, ParentType, ContextType>;
 };
 
 export type MutationResolvers<ContextType = any, ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']> = {
-  logout?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  createUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationCreateUserArgs, never>>;
   login?: Resolver<ResolversTypes['AuthLoginResponseDto'], ParentType, ContextType, RequireFields<MutationLoginArgs, 'dto'>>;
+  logout?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  updateUser?: Resolver<ResolversTypes['User'], ParentType, ContextType, RequireFields<MutationUpdateUserArgs, 'id'>>;
 };
 
 export interface DateScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes['Date'], any> {
@@ -199,6 +269,16 @@ export interface JsonScalarConfig extends GraphQLScalarTypeConfig<ResolversTypes
   name: 'JSON';
 }
 
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  firstName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  lastName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  isActive?: Resolver<ResolversTypes['Boolean'], ParentType, ContextType>;
+  createdAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  updatedAt?: Resolver<ResolversTypes['Date'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType>;
+};
+
 export type Resolvers<ContextType = any> = {
   AuthLoginResponseDto?: AuthLoginResponseDtoResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
@@ -206,6 +286,7 @@ export type Resolvers<ContextType = any> = {
   Date?: GraphQLScalarType;
   PaginationAmount?: GraphQLScalarType;
   JSON?: GraphQLScalarType;
+  User?: UserResolvers<ContextType>;
 };
 
 

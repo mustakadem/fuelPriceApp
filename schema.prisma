@@ -12,3 +12,17 @@ model DisabledToken {
   token     String   @id
   expiresAt DateTime
 }
+
+model User {
+    id            String    @id @default(uuid())
+    firstName     String
+    lastName      String
+    isActive      Boolean   @default(true)
+
+
+    // TimeStamps
+    createdAt    DateTime   @default(now())
+    updatedAt    DateTime   @updatedAt
+
+    @@unique([firstName, lastName])
+}

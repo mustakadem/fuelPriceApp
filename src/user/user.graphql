@@ -1,0 +1,58 @@
+## QUERIES
+
+type Query {
+  """
+  Get all users
+
+  Roles: `admin`
+  """
+  users: [User!]!
+
+  """
+  Get user by id
+
+  Roles: `admin`
+  """
+  user(id: String!): User!
+}
+
+## MUTATIONES
+
+type Mutation {
+  """
+  Create user
+
+  Roles: `admin`
+  """
+  createUser(dto: CreateUserDto): User!
+
+  """
+  Update user
+
+  Roles: `admin`
+  """
+  updateUser(id: String!, dto: UpdateUserDto): User!
+}
+
+## TYPES
+
+type User {
+  id: String!
+  firstName: String!
+  lastName: String!
+  isActive: Boolean!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+## INPUTS
+
+input CreateUserDto {
+  firstName: String!
+  lastName: String!
+}
+
+input UpdateUserDto {
+  firstName: String
+  lastName: String
+}
