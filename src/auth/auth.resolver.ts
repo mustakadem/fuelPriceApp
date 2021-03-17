@@ -49,7 +49,7 @@ export class AuthResolver {
 
     const id = payload.id;
     const user: Record<string, string> = {};
-    /*const user = await this.prisma.user.findOne({
+    /*const user = await this.prisma.user.findUnique({
       where: {
         id,
       },
