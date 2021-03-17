@@ -6,6 +6,7 @@ import depthLimit from 'graphql-depth-limit';
 import { ScalarsModule } from './scalars/scalars.module';
 import GraphQLJSON from 'graphql-type-json';
 import { ScheduleModule } from '@nestjs/schedule';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { ScheduleModule } from '@nestjs/schedule';
     }),
     ScalarsModule,
     ScheduleModule.forRoot(),
+    AuthModule,
   ],
 })
 export class AppModule {}
