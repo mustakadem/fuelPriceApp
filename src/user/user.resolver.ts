@@ -21,7 +21,7 @@ export class UserResolver {
 
   @Query('user')
   @Roles('admin')
-  public async user(@Args() { id }: { id: string }): Promise<User> {
+  public async user(@Args('id') id: string): Promise<User> {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
       throw new BaseError('User not found!');
@@ -36,16 +36,15 @@ export class UserResolver {
 
   @Mutation('createUser')
   @Roles('admin')
-  public async createUser(
-    @Args() { dto }: { dto: CreateUserDto },
-  ): Promise<User> {
+  public async createUser(@Args('dto') dto: CreateUserDto): Promise<User> {
     return await this.prisma.user.create({ data: dto });
   }
 
   @Mutation('updateUser')
   @Roles('admin')
   public async updateUser(
-    @Args() { dto, id }: { dto: UpdateUserDto; id: string },
+    @Args('id') id: string,
+    @Args('dto') dto: UpdateUserDto,
   ): Promise<User> {
     console.log(dto, id);
     return await this.prisma.user.update({ where: { id }, data: dto });
