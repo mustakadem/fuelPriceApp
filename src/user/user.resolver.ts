@@ -3,11 +3,15 @@ import { Roles } from '@/auth/roles.decorator';
 import { User } from '@prisma/client';
 import { PrismaService } from '@/prisma/prisma.service';
 import { CreateUserDto, UpdateUserDto } from '@/graphql.types';
-import { BaseError } from '@/errors';
+import { BaseError, NotFoundError } from '@/errors';
+import { UserServices } from '@/user/user.services';
 
 @Resolver('User')
 export class UserResolver {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly userService: UserServices,
+  ) {}
 
   /**
    * QUERIES
@@ -22,12 +26,11 @@ export class UserResolver {
   @Query('user')
   @Roles('admin')
   public async user(@Args('id') id: string): Promise<User> {
-    const user = await this.prisma.user.findUnique({ where: { id } });
-    if (!user) {
-      throw new BaseError('User not found!');
+    try {
+      return this.userService.checkUserIsActive(id);
+    } catch (e) {
+      throw new BaseError('Ups! Ha ocurrido un error!');
     }
-
-    return user;
   }
 
   /**

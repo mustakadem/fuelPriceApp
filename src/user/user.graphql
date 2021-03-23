@@ -50,6 +50,7 @@ type User {
 input CreateUserDto {
   firstName: String!
   lastName: String!
+  isActive: Boolean
 }
 
 input UpdateUserDto {

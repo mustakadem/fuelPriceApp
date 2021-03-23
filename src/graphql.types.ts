@@ -121,6 +121,7 @@ export type User = {
 export type CreateUserDto = {
   firstName: Scalars['String'];
   lastName: Scalars['String'];
+  isActive?: Maybe<Scalars['Boolean']>;
 };
 
 export type UpdateUserDto = {
